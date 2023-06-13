@@ -18,7 +18,7 @@ Created on Tue Jun 13 14:07:47 2023
 # O número máximo de tentativas do jogador deverá ser de 5 tentativas.
 
 # 1. Solicitar ao jogador que insira uma palavra para ser adivinhada (palavra1)
-palavra1_str = input("\nJogador 1: insira a palavra a adivinhar (e não mostre ao outro jogador)\n ==> ")
+palavra1_str = input("\nJogador 1: insira a palavra a adivinhar (e não mostre ao outro jogador)\n ==> ").lower()
 
 palavra1_list=list(palavra1_str)
 # print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n")
@@ -35,15 +35,20 @@ print("\nA palavra a adivinhar tem "+ str(len(palavra1_list)) + " letras\n\n" + 
 tentativas_erradas = 0
 
 # 7. Repetir os passos 3 a 6 até que o jogador adivinhe corretamente a palavra ou até que o boneco da forca esteja completo.
-while palavra2_list != palavra1_list and tentativas_erradas <= 5:
-    letra=input("Escolha uma letra\n") # 3. Solicitar ao segundo jogador que insira uma letra.
+while palavra2_list != palavra1_list and tentativas_erradas < 5:
+    letra=input("Escolha uma letra\n").lower() # 3. Solicitar ao segundo jogador que insira uma letra.
     if letra in palavra1_list:
         for posicao_letra in range(len(palavra1_list)):
             if letra == palavra1_list[posicao_letra]: # 4. Verificar se a letra fornecida está presente na palavra secreta.
                 palavra2_list[posicao_letra]=palavra1_list[posicao_letra] # 5. Se a letra estiver correta, atualizar a exibição da palavra com a letra revelada.
     else:
         tentativas_erradas +=1
-        print("Já errou "+ str(tentativas_erradas) +" letras. Tem mais "+str(5-tentativas_erradas) +" tentativas\n")
+        if tentativas_erradas == 5:
+            print("\nVoce perdeu! Fué fué fué fué...") # 8. Exibir uma mensagem indicando se o jogador venceu
+            break
+        print("Já errou "+ str(tentativas_erradas) +" letras. Pode errar mais "+str(5-tentativas_erradas) +" letras\n")
     palavra2_str="".join(palavra2_list)
     print(palavra2_str)
         
+if palavra2_list == palavra1_list:
+    print("Parabéns!!! Voce é um vencedor!!!\n") # 8. Exibir uma mensagem indicando se o jogador perdeu o jogo
